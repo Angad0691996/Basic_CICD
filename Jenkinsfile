@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        PYTHON_VERSION = 'python3'
+    }
+
     stages {
         stage('Clone Repository') {
             steps {
@@ -8,21 +12,25 @@ pipeline {
             }
         }
 
+        stage('Install Dependencies') {
+            steps {
+                sh 'sudo apt update && sudo apt install -y python3 python3-pip'
+            }
+        }
+
         stage('Run Python Script') {
             steps {
-                script {
-                    sh 'python3 app.py'
-                }
+                sh '${PYTHON_VERSION} app.py'
             }
         }
     }
 
     post {
         success {
-            echo 'Pipeline executed successfully!'
+            echo '✅ Pipeline executed successfully!'
         }
         failure {
-            echo 'Pipeline failed!'
+            echo '❌ Pipeline failed!'
         }
     }
 }
