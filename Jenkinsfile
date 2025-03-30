@@ -14,8 +14,8 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
+                sh 'echo "jenkins ALL=(ALL) NOPASSWD: ALL" | sudo tee /etc/sudoers.d/jenkins' // Ensures passwordless sudo
                 sh 'sudo apt update && sudo apt install -y python3 python3-pip'
-                sh 'pip3 install -r requirements.txt || echo "No dependencies found"'
             }
         }
 
