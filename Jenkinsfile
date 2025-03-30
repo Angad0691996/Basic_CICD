@@ -15,6 +15,7 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 sh 'sudo apt update && sudo apt install -y python3 python3-pip'
+                sh 'pip3 install -r requirements.txt || echo "No dependencies found"'
             }
         }
 
